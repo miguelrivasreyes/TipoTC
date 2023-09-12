@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dmn:definitions xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns="https://kiegroup.org/dmn/_51C86A86-01AE-4979-8BF0-9E28F1C1C1AF" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:kie="http://www.drools.org/kie/dmn/1.2" xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="_937CCFD2-B32B-4399-ABEC-61B6AB8A259E" name="Tipo de TC" typeLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" namespace="https://kiegroup.org/dmn/_51C86A86-01AE-4979-8BF0-9E28F1C1C1AF">
   <dmn:extensionElements/>
+  <dmn:itemDefinition id="_4F3DE1C7-3EB4-4EBB-BE5D-B233CC44BFB0" name="tipoEmpleo" isCollection="false">
+    <dmn:typeRef>string</dmn:typeRef>
+    <dmn:allowedValues kie:constraintType="enumeration" id="_A5FD85A4-F687-42D1-996A-26D472F9FFD4">
+      <dmn:text>"INDEPENDIENTE", "DEPENDIENTE"</dmn:text>
+    </dmn:allowedValues>
+  </dmn:itemDefinition>
   <dmn:inputData id="_63B552F5-8723-4CDB-A8FF-E7FF3B81F753" name="Sueldo">
     <dmn:extensionElements/>
     <dmn:variable id="_3E3B30C9-B414-47AE-96CA-F3B449A3029A" name="Sueldo" typeRef="number"/>
@@ -11,7 +17,15 @@
     <dmn:informationRequirement id="_B29309B2-F93F-4EDF-848E-0B74727B9419">
       <dmn:requiredInput href="#_63B552F5-8723-4CDB-A8FF-E7FF3B81F753"/>
     </dmn:informationRequirement>
+    <dmn:informationRequirement id="_DBBF1EEF-2CEC-40AA-8B71-E13D57A3DC64">
+      <dmn:requiredInput href="#_989186D8-69DE-4193-881F-5207304E6445"/>
+    </dmn:informationRequirement>
     <dmn:decisionTable id="_348CFD39-4C86-45C2-8A26-712B68B863E7" hitPolicy="UNIQUE" preferredOrientation="Rule-as-Row">
+      <dmn:input id="_018D9325-70F3-4DED-8C51-37EA92D9382C">
+        <dmn:inputExpression typeRef="tipoEmpleo">
+          <dmn:text>Tipo de Empleo</dmn:text>
+        </dmn:inputExpression>
+      </dmn:input>
       <dmn:input id="_DA3CA7EF-6A2D-469C-AA78-3B3416C55030">
         <dmn:inputExpression id="_8F4CFF10-4D5B-494D-9A96-68F094A73947" typeRef="number">
           <dmn:text>Sueldo</dmn:text>
@@ -20,6 +34,9 @@
       <dmn:output id="_560FB926-0921-4ED7-A6F2-99696850F828"/>
       <dmn:annotation name="annotation-1"/>
       <dmn:rule id="_2B9B7F63-DB6D-4E28-8F83-BEE37968143D">
+        <dmn:inputEntry id="_816BF01C-40AB-4A11-BF28-61D05833EC02">
+          <dmn:text>"DEPENDIENTE"</dmn:text>
+        </dmn:inputEntry>
         <dmn:inputEntry id="_8C40073F-1450-4074-A588-099FA0B224DB">
           <dmn:text>[0..1000)</dmn:text>
         </dmn:inputEntry>
@@ -31,6 +48,9 @@
         </dmn:annotationEntry>
       </dmn:rule>
       <dmn:rule id="_40E080A3-352E-49DD-8783-B0EFFE927FB4">
+        <dmn:inputEntry id="_F7967BE9-8E54-4A48-BEA5-69B373AEF688">
+          <dmn:text>"DEPENDIENTE"</dmn:text>
+        </dmn:inputEntry>
         <dmn:inputEntry id="_95D96AD6-426A-43D2-9D8A-94F5143D97EB">
           <dmn:text>[1000..2000)</dmn:text>
         </dmn:inputEntry>
@@ -42,8 +62,11 @@
         </dmn:annotationEntry>
       </dmn:rule>
       <dmn:rule id="_86697689-5934-4B1E-BE1D-302F55CBD6E8">
+        <dmn:inputEntry id="_2BE04122-BCE1-42F1-B25B-9967024EDAFF">
+          <dmn:text>"DEPENDIENTE"</dmn:text>
+        </dmn:inputEntry>
         <dmn:inputEntry id="_1F781940-0741-417C-9B75-288FF2F2784C">
-          <dmn:text>[2000...5000)</dmn:text>
+          <dmn:text>[2000..5000)</dmn:text>
         </dmn:inputEntry>
         <dmn:outputEntry id="_8694D3DA-E36A-445F-B7AE-986031599B1A">
           <dmn:text>"BLACK"</dmn:text>
@@ -52,9 +75,68 @@
           <dmn:text/>
         </dmn:annotationEntry>
       </dmn:rule>
+      <dmn:rule id="_04AB2F56-0ED5-4942-8951-DEBBBBE3E309">
+        <dmn:inputEntry id="_E9D4BC46-DC2D-4042-8EA8-B132B053DF58">
+          <dmn:text>"DEPENDIENTE"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_566802B3-3B6E-4E97-9284-56A13BEFA092">
+          <dmn:text>&gt;=5000</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_1DF8B783-F600-4E20-AD28-682FB23D92E8">
+          <dmn:text>"PLATINUM"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_2BDFEAF9-B4AB-4676-94D5-33DAB8F68D32">
+        <dmn:inputEntry id="_869652A6-2B74-43C9-820E-454922F94746">
+          <dmn:text>"INDEPENDIENTE"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_350AD688-4446-411D-82B7-F368C557A9B4">
+          <dmn:text>[500..2000)</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_2E8ED4A8-E40D-4FFA-A54C-A236C7233035">
+          <dmn:text>"SILVER"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_70FCB4B3-DF66-41BA-AB61-A00D5323FFBD">
+        <dmn:inputEntry id="_0AB614E2-86AC-427F-80A5-E41DAC312C70">
+          <dmn:text>"INDEPENDIENTE"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_2E881D34-80A0-4AD7-AA17-C93CE90D05E4">
+          <dmn:text>[2000..4000)</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_31B2401B-FA05-4883-B204-BCB0732D6BE5">
+          <dmn:text>"GOLD"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
+      <dmn:rule id="_51F91749-951C-45A5-B09D-B2B0E6E225AD">
+        <dmn:inputEntry id="_19A02040-1C23-42D9-857E-AA4D25D53FB9">
+          <dmn:text>"INDEPENDIENTE"</dmn:text>
+        </dmn:inputEntry>
+        <dmn:inputEntry id="_AED16DD7-4CE3-456D-A9EC-CFF490C9EEA6">
+          <dmn:text>[4000..6000)</dmn:text>
+        </dmn:inputEntry>
+        <dmn:outputEntry id="_C5854EF0-C0E5-4117-B2F0-5C1F624C01F5">
+          <dmn:text>"BLACK"</dmn:text>
+        </dmn:outputEntry>
+        <dmn:annotationEntry>
+          <dmn:text/>
+        </dmn:annotationEntry>
+      </dmn:rule>
       <dmn:rule id="_A5F55944-CAEF-40B7-B947-7B507F404435">
+        <dmn:inputEntry id="_99709B1D-3CF3-4FF7-9728-00354FDC8046">
+          <dmn:text>"INDEPENDIENTE"</dmn:text>
+        </dmn:inputEntry>
         <dmn:inputEntry id="_588E7836-105A-4884-AA63-30C278B38B15">
-          <dmn:text>&gt;50000</dmn:text>
+          <dmn:text>&gt;=6000</dmn:text>
         </dmn:inputEntry>
         <dmn:outputEntry id="_0F5DFCC3-9266-4E2F-9117-3B29E058FDC3">
           <dmn:text>"PLATINUM"</dmn:text>
@@ -65,12 +147,17 @@
       </dmn:rule>
     </dmn:decisionTable>
   </dmn:decision>
+  <dmn:inputData id="_989186D8-69DE-4193-881F-5207304E6445" name="Tipo de Empleo">
+    <dmn:extensionElements/>
+    <dmn:variable id="_4AFBA6E4-5AC5-4695-8D00-5A203F009EF4" name="Tipo de Empleo" typeRef="tipoEmpleo"/>
+  </dmn:inputData>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram id="_7E1C0BEB-823C-47CA-9C3B-9826706C4CB4" name="DRG">
       <di:extension>
         <kie:ComponentsWidthsExtension>
           <kie:ComponentWidths dmnElementRef="_348CFD39-4C86-45C2-8A26-712B68B863E7">
             <kie:width>50</kie:width>
+            <kie:width>167</kie:width>
             <kie:width>302</kie:width>
             <kie:width>100</kie:width>
             <kie:width>100</kie:width>
@@ -92,12 +179,25 @@
           <dmndi:StrokeColor red="0" green="0" blue="0"/>
           <dmndi:FontColor red="0" green="0" blue="0"/>
         </dmndi:DMNStyle>
-        <dc:Bounds x="300" y="30" width="100" height="50"/>
+        <dc:Bounds x="365" y="1" width="100" height="50"/>
         <dmndi:DMNLabel/>
       </dmndi:DMNShape>
-      <dmndi:DMNEdge id="dmnedge-drg-_B29309B2-F93F-4EDF-848E-0B74727B9419-AUTO-SOURCE-AUTO-TARGET" dmnElementRef="_B29309B2-F93F-4EDF-848E-0B74727B9419">
+      <dmndi:DMNShape id="dmnshape-drg-_989186D8-69DE-4193-881F-5207304E6445" dmnElementRef="_989186D8-69DE-4193-881F-5207304E6445" isCollapsed="false">
+        <dmndi:DMNStyle>
+          <dmndi:FillColor red="255" green="255" blue="255"/>
+          <dmndi:StrokeColor red="0" green="0" blue="0"/>
+          <dmndi:FontColor red="0" green="0" blue="0"/>
+        </dmndi:DMNStyle>
+        <dc:Bounds x="453" y="160" width="100" height="50"/>
+        <dmndi:DMNLabel/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="dmnedge-drg-_B29309B2-F93F-4EDF-848E-0B74727B9419-AUTO-SOURCE" dmnElementRef="_B29309B2-F93F-4EDF-848E-0B74727B9419">
         <di:waypoint x="350" y="160"/>
-        <di:waypoint x="350" y="80"/>
+        <di:waypoint x="415" y="51"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="dmnedge-drg-_DBBF1EEF-2CEC-40AA-8B71-E13D57A3DC64-AUTO-TARGET" dmnElementRef="_DBBF1EEF-2CEC-40AA-8B71-E13D57A3DC64">
+        <di:waypoint x="503" y="185"/>
+        <di:waypoint x="415" y="51"/>
       </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>
